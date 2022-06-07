@@ -1,6 +1,6 @@
 from youtube_transcript_api import YouTubeTranscriptApi
 from log_tools import log
-from publics import ExceptionLine
+from publics import ExceptionLine, db
 
 has_persian_sub = "Cd-artSbpXc"
 hasnt_persian_sub = "W9wAfqBd_T0"
@@ -23,6 +23,9 @@ from time import time
 from pytube import YouTube, Playlist
 
 playlist_link = "https://www.youtube.com/watch?v=W9wAfqBd_T0&list=PLD018AC9B25A23E16"
+
+col_video = db()['vodeo']
+print(col_video.count())
 
 video_links = Playlist(playlist_link).video_urls
 print(video_links)
