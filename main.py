@@ -14,8 +14,26 @@ def get_transcript(video_id):
         return None
 
 
+# sub = get_transcript(has_persian_sub)
+# if sub is not None:
+#     for item in sub:
+#         print(item)
 
-sub = get_transcript(hasnt_persian_sub)
-if sub is not None:
-    for item in sub:
-        print(item)
+from time import time
+from pytube import YouTube, Playlist
+
+playlist_link = "https://www.youtube.com/watch?v=W9wAfqBd_T0&list=PLD018AC9B25A23E16"
+
+video_links = Playlist(playlist_link).video_urls
+print(video_links)
+video_titles = []
+start = time()
+for link in video_links:
+    sub = get_transcript(link.split("=")[1])
+    print(link)
+    print(sub is None)
+    # print(link)
+    # print(YouTube(link).title)
+    # video_titles.append(YouTube(link).title)
+
+print(f'Time taken: {time() - start}')
