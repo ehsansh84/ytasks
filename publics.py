@@ -1,3 +1,7 @@
+from log_tools import log
+import os
+from consts import consts
+
 
 def ExceptionLine():
     import linecache
@@ -9,3 +13,18 @@ def ExceptionLine():
     linecache.checkcache(filename)
     line = linecache.getline(filename, lineno, f.f_globals)
     return f"{filename}:{lineno} => {line.strip()}"
+
+
+def db():
+    try:
+        from pymongo import MongoClient
+        MONGO_CONNECTION = os.getenv('MONGO')
+        log.info(f'MONGO_CONNECTION: {MONGO_CONNECTION}')
+        if MONGO_CONNECTION is None:
+            con = MongoClient(f'mongodb://localhost:{consts.MONGODB_PORT}')
+        else:
+            con = MongoClient('mongodb://' + MONGO_CONNECTION)
+        return con[consts.DB_NAME]
+    except:
+        log.error(ExceptionLine())
+    return None
