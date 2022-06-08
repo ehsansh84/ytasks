@@ -21,7 +21,7 @@ def db():
         MONGO_CONNECTION = os.getenv('MONGO')
         log.info(f'MONGO_CONNECTION: {MONGO_CONNECTION}')
         if MONGO_CONNECTION is None:
-            con = MongoClient(f'mongodb://localhost:{consts.MONGODB_PORT}')
+            con = MongoClient(f'mongodb://85.208.253.129:{consts.MONGODB_PORT}')
         else:
             con = MongoClient('mongodb://' + MONGO_CONNECTION)
         return con[consts.DB_NAME]
