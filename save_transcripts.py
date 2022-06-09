@@ -1,7 +1,7 @@
-from youtube_transcript_api import YouTubeTranscriptApi
-from log_tools import log
-from publics import ExceptionLine, db
 import os
+
+from publics import db
+
 TRANSCRIPT_DIR = 'transcripts'
 if not os.path.exists(TRANSCRIPT_DIR):
     os.mkdir(TRANSCRIPT_DIR)
