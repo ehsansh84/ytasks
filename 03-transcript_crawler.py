@@ -9,7 +9,7 @@ def get_transcript(video_id):
     except:
         log.error(f'An error occurred! {ExceptionLine()}')
         return None
-
+re
 col_video = db()['video']
 for item in col_video.find({'subtitle': {'$exists': False}}, {'video_id': 1}):
     sub = get_transcript(item['video_id'])
