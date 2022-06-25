@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <ul>
+        {% for video in data: %}
+        <li><a href="{{ video.url }}">{{ video.title }}</a></li>
+	    {% endfor %}
+	</ul>
+    </body>
+</html>
