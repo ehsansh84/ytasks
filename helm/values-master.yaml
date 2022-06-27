@@ -1,0 +1,46 @@
+metadata:
+  namespace: yt
+backend:
+  name: ytasks
+  image: shirzadi/ytasks
+  tag: latest
+  service:
+    port: 8282
+    type: ClusterIP
+  env:
+    - name: TZ
+      value: Asia/Tehran
+    - name: MONGO
+      value: mongo-svc
+    - name: DB_NAME
+      value: ytasks
+  pvc:
+    name: yt-pvc
+storage:
+  storageclassname: rook-cephfs
+  storagesize: 1Gi
+ingress:
+  host: yt.ehsanshirzadi.com
+db:
+  env:
+    - name: TZ
+      value: Asia/Tehran
+  image: mongo
+  name: mongodb
+  user: admin
+  pass: Mongo@123
+  pvc:
+    name: db-pvc
+  storage:
+#    storageClassName: openebs-lvmpv
+    storageClassName: rook-ceph-block-3
+    storagesize: 1Gi
+  service:
+    name: mongo-svc
+    port: 27017
+    type: ClusterIP
+  public_service:
+    name: mongo-node-svc
+    port: 27017
+    type: NodePort
+    nodePort: 30034

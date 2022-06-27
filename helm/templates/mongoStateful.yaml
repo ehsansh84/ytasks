@@ -1,0 +1,46 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.db.name }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.db.name }}
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  serviceName: {{ .Values.db.name }}
+  selector:
+    matchLabels:
+      app: {{ .Values.db.name }}
+      app.kubernetes.io/name: {{ .Values.db.name }}
+      helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.db.name }}
+        app.kubernetes.io/name: {{ .Values.db.name }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+#      tolerations:
+#        - key: database
+#          operator: Exists
+      containers:
+      - name: {{ .Values.db.name }}
+        image: {{ .Values.db.image }}
+        {{- with .Values.db.env }}
+        env:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        ports:
+          - containerPort: 27017
+        volumeMounts:
+          - name: datadir
+            mountPath: /data/db
+      volumes:
+      - name: datadir
+        persistentVolumeClaim:
+          claimName: {{ .Values.db.pvc.name }}

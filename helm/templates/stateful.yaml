@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.backend.name }}
+  labels:
+    app.kubernetes.io/name: cman
+    helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  serviceName: cman
+  selector:
+    matchLabels:
+      app: {{ .Values.backend.name }}
+      app.kubernetes.io/name: {{ .Values.backend.name }}
+      helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.backend.name }}
+        app.kubernetes.io/name: {{ .Values.backend.name }}
+        helm.sh/chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      tolerations:
+        - key: database
+          operator: Exists
+      containers:
+      - name: cman
+        image: "{{ .Values.backend.image }}:{{ .Values.backend.tag }}"
+        imagePullPolicy: Always
+        {{- with .Values.backend.env }}
+        env:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
