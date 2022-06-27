@@ -6,9 +6,11 @@ from publics import db
 col_video = db()['video']
 col_playlist = db()['playlist']
 pl_counter = 1
-result = col_playlist.find()
+# result = col_playlist.find()
+result = col_playlist.find({"channel_name": "kurzgesagt"})
 for playlist in result:
-    print(f"playlist: {pl_counter}/{result.count()}")
+    print(f"playlist: {pl_counter}")
+    # print(f"playlist: {pl_counter}/{result.count()}")
     pl_counter += 1
     playlist_link = playlist['url']
     video_links = Playlist(playlist_link).video_urls
