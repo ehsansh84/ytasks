@@ -5,7 +5,7 @@ backend:
   image: shirzadi/ytasks
   tag: latest
   service:
-    port: 8282
+    port: 5000
     type: ClusterIP
   env:
     - name: TZ
@@ -32,7 +32,6 @@ db:
   pvc:
     name: db-pvc
   storage:
-#    storageClassName: openebs-lvmpv
     storageClassName: rook-ceph-block-3
     storagesize: 1Gi
   service:

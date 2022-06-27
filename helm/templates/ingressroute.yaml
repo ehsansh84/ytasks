@@ -26,8 +26,8 @@ spec:
     - web
   routes:
   - match: Host({{ .Values.ingress.host | quote }})
-    middlewares:
-      - name: redirect-https
+#    middlewares:
+#      - name: redirect-https
     kind: Rule
     services:
       - name: {{ $.Values.backend.name }}
