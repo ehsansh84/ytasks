@@ -3,4 +3,3 @@ google-api-python-client
 pytube
 youtube-transcript-api
 colorlog
-gunicorn
