@@ -28,6 +28,7 @@ def playlist():
         return render_template('playlist.html', title='Playlists', playlists=data)
     except:
         log.error(f'An error occurred! {ExceptionLine()}')
+        return render_template('er500.html', title='Shit happend', error=f'An error occurred! {ExceptionLine()}')
 
 
 @app.route('/video')
@@ -44,6 +45,7 @@ def video():
         return render_template('video.html', title='Videos', data=data)
     except:
         log.error(f'An error occurred! {ExceptionLine()}')
+        return render_template('er500.html', title='Shit happend', error=f'An error occurred! {ExceptionLine()}')
 
 
 if __name__ == '__main__':
