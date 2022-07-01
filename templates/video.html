@@ -5,7 +5,7 @@
     <body>
         <ul>
         {% for video in data: %}
-        <li><a href="{{ video.url }}">{{ video.title }}</a></li>
+            <li><span>{{ video.author }}</span><a href="{{ video.url }}">{{ video.title }}</a></li>
 	    {% endfor %}
 	</ul>
     </body>
