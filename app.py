@@ -36,8 +36,8 @@ def video():
     try:
         col_video = db()['video']
         result = col_video.find({'subtitle': {'$ne': None}},
-                                {'title': 1, 'views': 1, 'author': 1, 'channel_url': 1, 'url': 1, 'length': 1,
-                                 'thumbnail_url': 1}).limit(10)
+                                    {'title': 1, 'views': 1, 'author': 1, 'channel_url': 1, 'url': 1, 'length': 1,
+                                 'thumbnail_url': 1})
         data = []
         for item in result:
             data.append(item)
